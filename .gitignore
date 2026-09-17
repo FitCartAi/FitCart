@@ -1,32 +1,20 @@
-# dependencies
+# dependencies and generated output
 /node_modules
-
-# next.js
 /.next/
 /out/
+/build/
+/coverage/
+/playwright-report/
+/test-results/
 
-# production
-/build
-
-# local environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# vercel
-.vercel
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# editor / OS
-.DS_Store
+# private environment and deployment config
+.env*
+!.env.example
+.vercel/
 *.pem
 
-# typescript
+# logs and local machine files
+*.log
+.DS_Store
+Thumbs.db
 *.tsbuildinfo
