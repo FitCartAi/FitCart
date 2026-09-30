@@ -20,7 +20,22 @@ export function OnboardingForm() {
   const [acknowledged, setAcknowledged] = useState(false);
   const [reviewError, setReviewError] = useState("");
   const heading = useRef<HTMLHeadingElement>(null);
+  const pendingFocus = useRef<Field | null>(null);
+
   useEffect(() => { if (ready) heading.current?.focus(); }, [step, ready]);
+
+  useEffect(() => {
+    const field = pendingFocus.current;
+    if (!field) return;
+    const target =
+      document.getElementById(field) ??
+      document.querySelector<HTMLElement>(`[name="${field}"]`) ??
+      document.querySelector<HTMLElement>("[aria-invalid='true']");
+    if (target instanceof HTMLElement) {
+      target.focus();
+      pendingFocus.current = null;
+    }
+  }, [errors, step]);
   function set<K extends Field>(key: K, value: Draft[K]) {
     update({ ...d, [key]: value });
     setErrors(prev => ({ ...prev, [key]: undefined }));
@@ -40,9 +55,10 @@ export function OnboardingForm() {
     e.preventDefault();
     const found = step === 4 ? validateDraft(d) : validateStep(d, step);
     if (Object.keys(found).length) {
+      const first = Object.keys(found)[0] as Field;
+      pendingFocus.current = first;
       setErrors(found);
-      if (step === 4) { const first = Object.keys(found)[0] as Field; setStep(stepFields.findIndex(fields => fields.includes(first))); }
-      requestAnimationFrame(() => document.querySelector<HTMLElement>("[aria-invalid='true']")?.focus());
+      if (step === 4) setStep(stepFields.findIndex(fields => fields.includes(first)));
       return;
     }
     if (step < 4) { move(step + 1); return; }
