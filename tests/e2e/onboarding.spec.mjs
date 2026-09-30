@@ -21,11 +21,13 @@ async function expectNoHorizontalOverflow(page) {
   expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 1);
 }
 
-test('empty questionnaire blocks progression and focuses a field', async ({ page }) => {
+test('empty questionnaire blocks progression and exposes the first invalid field', async ({ page }) => {
   await page.goto('/onboarding');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page.getByRole('alert')).toBeVisible();
-  await expect(page.getByLabel('First name or nickname')).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'About you', exact: true })).toBeVisible();
+  await expect(page.getByLabel('First name or nickname')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByText('Enter a nickname of 1 to 40 characters.')).toBeVisible();
 });
 
 test('sample completes, edit preserves, forget clears', async ({ page }) => {
