@@ -1,182 +1,75 @@
 # FitCart MVP Roadmap
 
-Status labels:
+Updated 2026-09-23 for the pre-host prototype pass.
 
-- **Working** — implemented and verified
-- **In progress** — actively being built
-- **Mocked** — intentionally simulated for MVP validation
-- **Planned** — accepted but not started
-- **Deferred** — intentionally outside the current milestone
+**Verified** means a named check passed. **Mocked** means deliberately synthetic. **Planned** means not built. A deployed prototype should not imply that mocked or planned capabilities are live.
 
-## Milestone 0 — Repository and development foundation
+## Milestone 0 - Foundation
 
-Status: **In progress**
+Architecture, repository, environment template, app shell, browser-first Codespaces setup, and GitHub verification workflow exist. Vercel is not connected yet.
 
-Deliverables:
+## Milestone 1 - Guest onboarding
 
-- [x] Initialize GitHub repository
-- [x] Document MVP architecture
-- [x] Create decision log
-- [x] Create README and environment template
-- [x] Add minimal Next.js application shell
-- [ ] Install dependencies locally and verify `npm run dev`
-- [ ] Verify `npm run lint`
-- [ ] Connect Vercel project
+Status: **Implemented and manually exercised in Codespaces**.
 
-Exit criteria:
+- [x] Typed draft and normalized profile contract
+- [x] Goal, age, sex, activity, and imperial/metric measurements
+- [x] Diet, reported allergies, restrictions, and dislikes
+- [x] Weekly household budget, days, meals, people, and optional store/location
+- [x] Cooking skill, time, meal prep, equipment, and favorites
+- [x] Step validation, review, edits, reset, and optional tab storage
+- [x] Synthetic sample answers
+- [x] Unit tests
+- [x] Successful dependency install, lint, typecheck, and production build in GitHub Actions
+- [ ] Green desktop/mobile browser automation after pre-host polish
 
-- a teammate can clone the repository, install dependencies, and run the app from README instructions
-- `main` contains a runnable baseline
+## Milestone 2 - Mock result screens
 
-## Milestone 1 — Onboarding vertical slice
+Status: **Mocked / implemented**.
 
-Status: **Planned**
+The prototype includes a fixed seven-day layout, consolidated grocery list, fictional whole-package prices, grocery checkboxes, printing, and preset lunch swaps. The sample does not use questionnaire answers and is not allergy-screened.
 
-Minimum inputs:
+## Pre-host testing and feedback
 
-- first name/nickname
-- age
-- height
-- weight
-- sex
-- activity level
-- primary goal
-- weekly grocery budget
-- days to plan
-- meals per day
-- dietary preferences/restrictions
-- allergies
-- disliked foods
-- preferred grocery store
+Status: **Implemented**.
 
-Deliverables:
+- [x] Landing page centers the core value proposition: budgeting + fitness + meal planning + grocery planning in one workflow
+- [x] Prototype limitations remain explicit
+- [x] Lightweight feedback page asks about weekly use, clarity, budget usefulness, strongest value, missing features, and concerns
+- [x] Feedback stays client-side and can be copied for manual collection
+- [ ] Team reviews the hosted experience
+- [ ] Choose the team's long-term survey/data collection method
 
-- [ ] typed `UserProfile` schema
-- [ ] input validation
-- [ ] mobile-friendly onboarding form
-- [ ] guest/session persistence
-- [ ] confirmation/summary before generation
+## Milestone 3 - Structured personalized generation
 
-Exit criteria:
+Status: **Planned**. Select an AI provider and nutrition/safety methodology; add server-only structured generation, request validation, hard constraints, bounded retries, rate limits, and clear failures.
 
-- a test user can complete onboarding without an account
-- application receives one validated structured profile object
+## Milestone 4 - Grocery consolidation and pricing
 
-## Milestone 2 — Mock plan result
+Status: **Sample calculations verified; general engine planned**. General ingredient normalization, product matching, unit conversion, price provenance, and real store pricing are not built.
 
-Status: **Planned**
+## Milestone 5 - Budget optimizer
 
-Purpose: validate the experience before paying for or debugging AI generation.
+Status: **Planned**. Detect over-budget plans, identify costly choices, suggest substitutions, and recalculate after full constraint checks.
 
-Deliverables:
+## Milestone 6 - Personalized swaps
 
-- [ ] goal summary
-- [ ] general estimated nutrition targets
-- [ ] seven-day meal-plan UI
-- [ ] consolidated grocery-list UI
-- [ ] estimated total
-- [ ] short explanation of why the plan fits
+Status: **Planned**. Replace one meal or ingredient while preserving unrelated meals and recalculating groceries/cost.
 
-Data status: **Mocked**
+## Milestone 7 - Accounts and persistence
 
-Exit criteria:
+Status: **Deferred**. Supabase, auth, saved profiles, history, and account deletion remain outside the current shareable prototype.
 
-- the prototype scenario can move from onboarding to a believable complete results page
+## Milestone 8 - Clemson testing
 
-## Milestone 3 — Structured plan generation
+Status: **Ready after hosting**. Test onboarding completion, perceived personalization, usefulness of the grocery workflow, budget relevance, willingness to use weekly, and qualitative corrections.
 
-Status: **Planned**
+## Next gates
 
-Deliverables:
+1. Get the GitHub verification workflow green.
+2. Human review of the polished branch.
+3. Merge the pull request into main.
+4. Connect main to Vercel for a stable shareable URL.
+5. Start structured personalized generation only after the hosted prototype is available for feedback.
 
-- [ ] choose AI provider
-- [ ] provider-independent AI service interface
-- [ ] structured generation schema
-- [ ] validation and retry/error handling
-- [ ] fixed test profiles
-
-Exit criteria:
-
-- structured plan generation succeeds reliably for the internal demo profile
-- invalid output is rejected rather than rendered
-
-## Milestone 4 — Grocery consolidation and pricing
-
-Status: **Planned**
-
-Deliverables:
-
-- [ ] normalize ingredient names/units
-- [ ] combine duplicate grocery ingredients
-- [ ] categorize grocery items
-- [ ] mock/curated price dataset
-- [ ] calculate estimated total with deterministic code
-- [ ] unit tests for consolidation and totals
-
-Pricing status: **Mocked**
-
-## Milestone 5 — Budget optimizer
-
-Status: **Planned**
-
-Deliverables:
-
-- [ ] detect over-budget plans
-- [ ] identify costly ingredients/meals
-- [ ] apply/request substitutions
-- [ ] recalculate total
-- [ ] surface savings clearly
-
-Exit criteria:
-
-- an over-budget test profile can be revised toward the user's budget without rebuilding the entire application flow
-
-## Milestone 6 — Meal/ingredient swap
-
-Status: **Planned**
-
-Deliverables:
-
-- [ ] replace one meal or ingredient
-- [ ] recompute affected grocery quantities
-- [ ] recompute price
-- [ ] preserve unrelated meals
-
-## Milestone 7 — Persistence and accounts
-
-Status: **Deferred until core flow works**
-
-Deliverables:
-
-- [ ] Supabase project/database
-- [ ] database migrations
-- [ ] Supabase Auth
-- [ ] saved profile
-- [ ] saved plan history
-
-## Milestone 8 — Clemson alpha
-
-Status: **Planned**
-
-Collect:
-
-- onboarding completion
-- generation success
-- perceived personalization
-- grocery-list usefulness
-- budget believability
-- meal usefulness
-- willingness to use next week
-- qualitative corrections/comments
-
-## Explicitly deferred beyond MVP foundation
-
-- native mobile application
-- live retailer inventory
-- receipt scanning
-- grocery delivery checkout
-- pantry intelligence
-- social features
-- payments/subscriptions
-- clinical nutrition functionality
-- custom machine-learning models
+Still deferred: live retailer inventory, checkout, receipts, pantry intelligence, subscriptions, native mobile, and clinical nutrition.

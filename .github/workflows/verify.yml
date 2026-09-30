@@ -1,0 +1,37 @@
+name: Verify FitCart
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: fitcart-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-fund
+      - name: Unit tests, lint, types and production build
+        run: npm run check
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Desktop and mobile browser checks
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fitcart-verification
+          path: |
+            playwright-report/
+            package-lock.json
+          retention-days: 7
