@@ -1,75 +1,55 @@
 # FitCart MVP Roadmap
 
-Updated 2026-09-23 for the pre-host prototype pass.
+Updated 2026-10-01. The approved budget-first direction supersedes the original fitness-first feature order. Historical architecture decisions remain in DECISIONS.md.
 
-**Verified** means a named check passed. **Mocked** means deliberately synthetic. **Planned** means not built. A deployed prototype should not imply that mocked or planned capabilities are live.
+## V1 baseline
 
-## Milestone 0 - Foundation
+- [x] Guest onboarding, review/edit/reset and opt-in tab storage
+- [x] Fixed sample week, consolidated example groceries, fictional prices and preset lunch swaps
+- [x] Copy-and-send feedback page (no backend)
+- [x] PR #1 merged into main
+- [x] Vercel production deployment reported working by Brian
 
-Architecture, repository, environment template, app shell, browser-first Codespaces setup, and GitHub verification workflow exist. Vercel is not connected yet.
+Legacy V1 routes remain intact. V1 was a prototype, not personalized generation. The previously removed blank-form browser test is restored in V2A with form-scoped alert selection.
 
-## Milestone 1 - Guest onboarding
+## V2A - budget-first preview
 
-Status: **Implemented and manually exercised in Codespaces**.
+- [x] Budget-first homepage and separate /budget, /cart, /sample routes
+- [x] Hard limit / target / lowest-cost choices
+- [x] Convenience / balanced / maximum savings options
+- [x] Select the four requested retailer brands
+- [x] Synthetic single-store and optional two-store basket comparisons
+- [x] Whole-package totals and measured pantry deductions
+- [x] Accept/undo illustrative cost-reduction swaps
+- [x] Available appliances and up to three preferred appliances
+- [x] No-cook option and appliance-filtered inspiration cards
+- [x] Optional health details, opt-out clearing and no required measurements
+- [x] Versioned V2 session data and review/edit/reset
+- [x] New unit and browser tests; check PR #2 for run outcomes
+- [ ] Brian/team review of the V2A preview
+- [ ] Approval, merge and production rollout of V2A
 
-- [x] Typed draft and normalized profile contract
-- [x] Goal, age, sex, activity, and imperial/metric measurements
-- [x] Diet, reported allergies, restrictions, and dislikes
-- [x] Weekly household budget, days, meals, people, and optional store/location
-- [x] Cooking skill, time, meal prep, equipment, and favorites
-- [x] Step validation, review, edits, reset, and optional tab storage
-- [x] Synthetic sample answers
-- [x] Unit tests
-- [x] Successful dependency install, lint, typecheck, and production build in GitHub Actions
-- [ ] Green desktop/mobile browser automation after pre-host polish
+Implemented is not the same as verified: the PR's latest check run records installation, unit tests, lint, types, production build and desktop/mobile browser results. A green automation run does not substitute for a human visual review.
 
-## Milestone 2 - Mock result screens
+All prices, retailer rankings, products and savings in V2A are synthetic. No live coupons or store data. The basket is a scaled fixture, not a complete diet-, allergy-, appliance- or nutrition-validated meal plan. Appliance selection affects inspiration cards only. Pantry notes do not reduce cost unless a measured supported quantity was entered.
 
-Status: **Mocked / implemented**.
+## V2B - pricing proof of concept
 
-The prototype includes a fixed seven-day layout, consolidated grocery list, fictional whole-package prices, grocery checkboxes, printing, and preset lunch swaps. The sample does not use questionnaire answers and is not allergy-screened.
+- [ ] Verify the exact target branches around Clemson
+- [ ] Find legitimate, reliable store/product price sources
+- [ ] Distinguish in-store, pickup and delivery channels and fees
+- [ ] Match products and pack sizes with missing-price handling
+- [ ] Record source, verified timestamp, availability and deal eligibility
+- [ ] Compare a real basket estimate against checkout
 
-## Pre-host testing and feedback
+Only add live comparisons when those gates are satisfied. A current-looking timestamp must never disguise sample data.
 
-Status: **Implemented**.
+## Subsequent planning and customer validation
 
-- [x] Landing page centers the core value proposition: budgeting + fitness + meal planning + grocery planning in one workflow
-- [x] Prototype limitations remain explicit
-- [x] Lightweight feedback page asks about weekly use, clarity, budget usefulness, strongest value, missing features, and concerns
-- [x] Feedback stays client-side and can be copied for manual collection
-- [ ] Team reviews the hosted experience
-- [ ] Choose the team's long-term survey/data collection method
+- [ ] Full recipe quantities, dietary/allergy constraints and appliance-compatible plans
+- [ ] Optional goal-aware planning after the budget workflow is useful
+- [ ] Reliable budget repair and personalized swaps
+- [ ] Test real grocery use and estimate accuracy, not just stated interest
+- [ ] Select a survey collection method and consent/privacy approach
 
-## Milestone 3 - Structured personalized generation
-
-Status: **Planned**. Select an AI provider and nutrition/safety methodology; add server-only structured generation, request validation, hard constraints, bounded retries, rate limits, and clear failures.
-
-## Milestone 4 - Grocery consolidation and pricing
-
-Status: **Sample calculations verified; general engine planned**. General ingredient normalization, product matching, unit conversion, price provenance, and real store pricing are not built.
-
-## Milestone 5 - Budget optimizer
-
-Status: **Planned**. Detect over-budget plans, identify costly choices, suggest substitutions, and recalculate after full constraint checks.
-
-## Milestone 6 - Personalized swaps
-
-Status: **Planned**. Replace one meal or ingredient while preserving unrelated meals and recalculating groceries/cost.
-
-## Milestone 7 - Accounts and persistence
-
-Status: **Deferred**. Supabase, auth, saved profiles, history, and account deletion remain outside the current shareable prototype.
-
-## Milestone 8 - Clemson testing
-
-Status: **Ready after hosting**. Test onboarding completion, perceived personalization, usefulness of the grocery workflow, budget relevance, willingness to use weekly, and qualitative corrections.
-
-## Next gates
-
-1. Get the GitHub verification workflow green.
-2. Human review of the polished branch.
-3. Merge the pull request into main.
-4. Connect main to Vercel for a stable shareable URL.
-5. Start structured personalized generation only after the hosted prototype is available for feedback.
-
-Still deferred: live retailer inventory, checkout, receipts, pantry intelligence, subscriptions, native mobile, and clinical nutrition.
+Deferred: accounts/history, payment plans, receipt scanning, retailer checkout, native mobile and clinical nutrition. Supabase and AI integrations remain unconnected.
