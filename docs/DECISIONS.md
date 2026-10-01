@@ -105,3 +105,27 @@ Reducing onboarding friction makes testing easier and keeps development focused 
 ### Revisit when
 
 Saved profiles, plan history, and recurring weekly use become part of the tested MVP.
+
+---
+
+## 2026-10-01 — Budget-first V2A, retailer integration in V2B
+
+### Decision
+
+Following Brian's approval and the supplied Milestone 2 survey direction, make budgeting the primary entry point. Fitness details are optional and cleared when disabled. Keep the single Next.js application; add budget components and pure calculation modules without a new backend, AI service or dependency.
+
+Use synthetic examples for the four requested retailers, explicit price-source metadata with no verified date, optional two-store comparisons, whole-package totals, measured pantry amounts and accept/undo substitutions. Available appliances and preferred appliances are separate; preferences must be an available subset of at most three. Meal inspiration uses those selections; a full compatible meal plan is not yet implemented.
+
+Preserve legacy routes and V1 storage without automatically migrating sensitive data. All changes go through a separate feature branch and preview, not directly to production. See [V2A specification](V2A_BUDGET_FIRST.md).
+
+### Why
+
+The survey points toward affordability, while reliable local retailer data remains unverified. This separates testing the shopping experience from falsely presenting sample prices as live quotes. Numeric pantry stock prevents assuming an entire purchase is free merely because a user owns some of it.
+
+### Alternatives considered
+
+Continue mandatory fitness-first onboarding; build live pricing before testing the new interface; split the backend; subtract pantry items by presence alone. These were not chosen for V2A.
+
+### Revisit when
+
+V2B establishes permissible, current local prices and product matches; user testing shows whether quantity entry and extra-store trade-offs are useful; or full dietary/appliance-compatible planning becomes the next approved scope.
