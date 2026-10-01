@@ -1,40 +1,27 @@
-# Start here: FitCart without installing anything
+# Review FitCart V2A in your browser
 
-The new code is on **feature/onboarding-preview** in **FitCartAi/FitCart**. A branch is a separate working version. You do not need to upload or move files; all new files are already in their correct locations. Main stays unchanged until the pull request is merged.
+This version puts budgeting first. Nothing needs to be downloaded or installed on your computer.
 
-## Open it in your browser
+## Review the new version
 
-1. Open the FitCart repository on GitHub. Above the file list, select **feature/onboarding-preview** from the branch dropdown.
-2. Click the green **Code** button, choose **Codespaces**, and create a codespace on this branch. Review GitHub's usage/billing message first. Use the smallest available machine; stop rather than entering payment details if you are unsure.
-3. Wait for cloud setup. The included configuration is set to install dependencies and start the preview automatically on GitHub's cloud computer, not yours. No local terminal, AI key or Supabase account is required.
-4. Choose **Open in Browser** for the preview. If a tab does not open, select the **Ports** panel at the bottom, find **3000 / FitCart preview**, and click the globe icon. Keep the port private. A first load may require a refresh while the app finishes starting.
-5. Choose **Build My Cart**, then **Use sample answers**. Continue through the four questionnaire sections and review screen. After confirmation, open **Explore fixed sample**.
+Open the V2A pull request in GitHub. Use the **Preview / Visit Preview** link from Vercel's deployment comment when it appears. It is a preview, not the production site. Sign into your Vercel/GitHub account if preview protection asks; do not disable protection or change billing just to test.
 
-A fresh codespace from this branch is simpler than updating an old workspace. Do not delete an old codespace with uncommitted work. If installation fails or port 3000 never opens, share the error text or a screenshot with the development assistant. Do not share tokens or passwords, and do not try random commands.
+On the preview, choose **Compare my cart**, then **Use sample answers**. Go through Budget, Stores, Food & pantry, Kitchen, Optional goals, and Review. Accept the sample-data notice and select **Compare sample cart**. **Explore a sample** on the homepage skips setup.
 
-## What to try
+Try a $1 hard limit, a blank amount in Lowest Cost mode, one-store-only shopping, a pantry amount, and removing an appliance after marking it preferred. Try a sample brand swap and undo it. No body measurements or API keys are required.
 
-Test whether the questions are clear, whether Back and Edit preserve your answers, and whether the review matches your inputs. In the fixed sample, swap a lunch, watch quantities and fictional totals update, check off an item, and find the print button.
+All retailer prices, rankings, and savings are fictional. The store comparison is a prototype, not actual local price research. Appliance choices affect sample inspiration only, not a complete dietary plan. Feedback still needs to be copied and sent to the team manually.
 
-The sample is always one person, seven days, three meals per day and an $85 example budget. Its prices are fictional. It does not use your answers, screen allergies or assess nutrition. It is for interface feedback, not shopping advice. No personalized AI generation or survey collection is connected.
+## Before merging
 
-## Shared computers and cloud usage
+Check that **Verify FitCart** has passed on the latest commit and that Vercel's preview is ready. Review the screens with Brian. Do not merge until approved: merging to main will update the live site.
 
-Use sample answers for the first test. Remembering answers in this tab is off by default. Without that option, refreshing clears the profile. With it, browser session storage survives refreshes and may survive session restore. Use **Forget my answers** before leaving, close the preview tab, and sign out of GitHub.
+## Codespaces fallback
 
-When finished, open **Your codespaces** on GitHub and use the three-dot menu to **Stop codespace**. Closing a browser does not immediately stop compute use. A stopped codespace still uses storage. Delete it only when needed work is committed. GitHub's usage allowances and billing settings apply.
+Use the `feature/v2a-budget-first` branch, then **Code > Codespaces > Create codespace**. The cloud computer installs dependencies and starts port 3000. Open **Ports > 3000 > Open in Browser**. Existing workspaces do not automatically receive new commits just because a preview page is refreshed. Do not delete an old workspace with uncommitted work. GitHub usage/billing limits apply.
 
-## Verification
+When finished, clear V2 answers, close the preview, sign out on a shared computer, and stop the Codespace. Stopping does not delete stored files.
 
-All 27 dependency-free unit tests passed in the implementation environment. The two domain modules passed strict TypeScript checks; all 11 application TS/TSX files passed syntax checks. Full Next.js compilation, lint, application-wide type checking, browser interaction tests and Codespaces startup require the GitHub checks or cloud preview: the implementation runtime could not reach npm. See the pull request's latest **Checks** before merging. Configuring a test is not the same as passing it.
+## Technical notes
 
-## Where the files live
-
-The repository root is the screen containing package.json and README.md. The questionnaire is under src/components/onboarding, its page is src/app/onboarding/page.tsx, and the sample page is src/app/demo/page.tsx. Supporting paths and decisions are in docs/ONBOARDING_IMPLEMENTATION.md. You do not need to edit any of them to test the app.
-
-## Official help
-
-- [Create a codespace on a branch](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
-- [Open a forwarded port](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace)
-- [Usage and billing](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)
-- [Conserve included usage](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage)
+See `docs/V2A_BUDGET_FIRST.md` for boundaries, file organization and V2B requirements. New components live in `src/components/budget`, new contracts/calculations in `src/lib/v2`, and the new route pages in `src/app/budget`, `cart`, and `sample`. The old V1 routes remain for compatibility. No manual file placement is needed.

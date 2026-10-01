@@ -1,78 +1,10 @@
-import Link from "next/link";
-import { consolidateDemo, makeDemoSchedule, money } from "@/lib/demo-plan";
-
-const valueCards = [
-  { label: "Budgeting", title: "Start with what you can spend.", copy: "Your grocery budget is a core input, not an afterthought." },
-  { label: "Fitness", title: "Plan around your goal.", copy: "Tell FitCart whether you want to gain muscle, lose weight, maintain, or simply eat better." },
-  { label: "Meal planning", title: "Turn goals into a real week.", copy: "Build toward practical meals that fit your preferences, schedule, and kitchen." },
-  { label: "Grocery planning", title: "Finish with one useful list.", copy: "Bring the week together in a consolidated cart with quantities and estimated cost." },
-];
-
+import Link from 'next/link';
 export default function Home() {
-  const total = consolidateDemo(makeDemoSchedule()).reduce((sum, item) => sum + item.costCents, 0);
-
-  return (
-    <main className="container page-space">
-      <section className="hero">
-        <div>
-          <p className="eyebrow">BUDGET + FITNESS + MEAL PLANNING + GROCERIES</p>
-          <h1>One plan for the way you <span>eat, train, and spend.</span></h1>
-          <p className="hero-copy">
-            FitCart is being built to turn your goals, food preferences, grocery budget, and shopping habits into one practical weekly plan.
-          </p>
-          <div className="hero-actions">
-            <Link href="/onboarding" className="button primary">Build My Cart <span aria-hidden="true">&rarr;</span></Link>
-            <Link href="/demo" className="button secondary">Explore a sample</Link>
-          </div>
-          <p className="help">No account. No payment. Use sample answers to test the prototype without entering personal information.</p>
-        </div>
-
-        <aside className="hero-preview">
-          <div className="preview-top"><span className="eyebrow">CURRENT PROTOTYPE</span><span className="pill">FIXED SAMPLE</span></div>
-          <h2>A week with a plan.</h2>
-          <div className="preview-meal"><span>BREAKFAST</span><strong>Banana overnight oats</strong></div>
-          <div className="preview-meal"><span>LUNCH</span><strong>Chicken, rice &amp; broccoli</strong></div>
-          <div className="preview-meal"><span>DINNER</span><strong>Turkey taco wraps</strong></div>
-          <div className="preview-bottom"><div><small>Fictional weekly total</small><strong>{money(total)}</strong></div><span>7 days<br />1 person</span></div>
-          <p className="help">Example layout only. Not personalized or allergy-checked. Prices are fictional.</p>
-        </aside>
-      </section>
-
-      <section className="value-section" aria-labelledby="value-heading">
-        <div className="section-intro">
-          <p className="eyebrow">WHY FITCART</p>
-          <h2 id="value-heading">Four jobs. One weekly workflow.</h2>
-          <p className="muted">Instead of bouncing between a budget, fitness goal, meal ideas, and a grocery list, FitCart is designed to connect them.</p>
-        </div>
-        <div className="value-grid">
-          {valueCards.map(card => (
-            <article className="value-card" key={card.label}>
-              <span className="eyebrow">{card.label}</span>
-              <h3>{card.title}</h3>
-              <p>{card.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="how-grid" aria-label="Prototype workflow">
-        <article><span className="eyebrow">01 / TELL US ABOUT YOU</span><h2>Start with your constraints.</h2><p>Goals, food preferences, budget, household, and kitchen setup.</p></article>
-        <article><span className="eyebrow">02 / CHECK THE DETAILS</span><h2>Stay in control.</h2><p>Review, edit, or clear your answers before moving forward.</p></article>
-        <article><span className="eyebrow">03 / TEST THE EXPERIENCE</span><h2>Help shape the product.</h2><p>Explore the fixed sample, then tell us what feels useful, confusing, or missing.</p></article>
-      </section>
-
-      <section className="feedback-callout">
-        <div>
-          <p className="eyebrow">BUILDING WITH REAL FEEDBACK</p>
-          <h2>Try it, then tell us what would make you come back next week.</h2>
-          <p>Our current priority is learning whether the workflow is clear and whether the combined budget + fitness + meal + grocery concept feels useful.</p>
-        </div>
-        <Link href="/feedback" className="button primary">Give prototype feedback <span aria-hidden="true">&rarr;</span></Link>
-      </section>
-
-      <div className="notice">
-        <strong>Where we are today:</strong> onboarding and sample result screens are working. Personalized AI plans, nutrition targets, live grocery prices, accounts, and saved weekly history are not connected yet.
-      </div>
-    </main>
-  );
+  return <main className="container page-space">
+    <div className="notice warning v2-banner"><strong>V2A prototype:</strong> sample prices, not live store quotes. Try the budget workflow without an account or payment.</div>
+    <section className="hero"><div><p className="eyebrow">LESS GUESSWORK. MORE ROOM IN YOUR BUDGET.</p><h1>Plan your week.<br />Compare your cart.<br /><span>Spend less.</span></h1><p className="hero-copy">A grocery budget should be a starting point, not a surprise at checkout. FitCart is being built to connect your budget, shopping choices and meals in one place.</p><div className="hero-actions"><Link href="/budget" className="button primary">Compare my cart <span aria-hidden="true">&rarr;</span></Link><Link href="/sample" className="button secondary">Explore a sample</Link></div><p className="help">Fitness is optional. Body measurements are not needed. Use sample answers to test without personal information.</p></div>
+    <aside className="hero-preview"><p className="eyebrow">YOUR MONEY. YOUR TRADE-OFFS.</p><h2>What would a smarter shop look like?</h2><div className="preview-meal"><span>SET YOUR BOUNDARY</span><strong>A hard limit, a target, or lowest cost.</strong></div><div className="preview-meal"><span>COMPARE YOUR OPTIONS</span><strong>One stop, or an optional second store.</strong></div><div className="preview-meal"><span>USE WHAT WORKS FOR YOU</span><strong>Your pantry. Your appliances. Your choices.</strong></div><p className="notice">Publix / Walmart / Food Lion / ALDI<br /><small>Clemson-area concept. Retailer prices, branches and deals are not verified in this version.</small></p></aside></section>
+    <section className="how-grid" aria-label="Budget-first workflow"><article><p className="eyebrow">01 / PLAN</p><h2>Put the budget first.</h2><p>Choose what you can spend, how many people you feed and where you would shop.</p></article><article><p className="eyebrow">02 / COMPARE</p><h2>See the trade-offs.</h2><p>Explore sample whole-package totals, pantry deductions and optional two-store combinations.</p></article><article><p className="eyebrow">03 / CHOOSE</p><h2>Keep control of every swap.</h2><p>Compare a lower-cost example before accepting a change. Healthy eating stays part of the idea; macro tracking is not the headline.</p></article></section>
+    <section className="feedback-callout"><div><p className="eyebrow">BUILD WITH US</p><h2>Would this make your next grocery trip easier?</h2><p>Try the sample, then tell us what helped and what did not. Real pricing comes in V2B.</p></div><Link href="/feedback" className="button primary">Give prototype feedback</Link></section>
+  </main>;
 }
