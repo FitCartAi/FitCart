@@ -47,8 +47,17 @@ test('package size controls the winner and charges can reverse it', async ({ pag
 });
 test('switching shopping method excludes unrelated shelf prices', async ({ page }) => {
   await start(page); await riceOnly(page); await price(page, 'aldi', '1', '2.40');
-  await page.getByLabel('Shopping method', { exact: true }).selectOption('pickup');
+  // Scope the actual comparison control, not the separate price-entry method.
+  // Exact wrapping-label text may include its option descendants in a label locator.
+  const method = page.getByRole('region', { name: '1. Set up your comparison', exact: true }).getByRole('combobox');
+  await expect(method).toHaveCount(1);
+  await expect(method).toHaveValue('in_store');
+  await expect(page.getByTestId('quote-aldi')).toContainText('$4.80');
+  await method.selectOption('pickup');
+  await expect(method).toHaveValue('pickup');
   await expect(page.getByTestId('quote-aldi')).toContainText('Incomplete');
+  await method.selectOption('in_store');
+  await expect(page.getByTestId('quote-aldi')).toContainText('$4.80');
 });
 test('loyalty prices are excluded until eligibility is explicitly selected', async ({ page }) => {
   await start(page); await riceOnly(page); await price(page, 'aldi', '1', '2.40', true);
