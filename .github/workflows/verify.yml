@@ -33,5 +33,53 @@ jobs:
           name: fitcart-verification
           path: |
             playwright-report/
+            test-results/browser-results.json
             package-lock.json
           retention-days: 7
+  browser-report:
+    needs: verify
+    if: ${{ always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      # Read report data only; do not check out or execute PR code with this token.
+      - uses: actions/download-artifact@v4
+        with:
+          name: fitcart-verification
+          path: report
+      - name: Publish bounded synthetic-test diagnostics to this PR
+        env:
+          GH_REPORT_TOKEN: ${{ github.token }}
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
+          const reportPath = 'report/test-results/browser-results.json';
+          if (!fs.existsSync(reportPath)) { console.log('No browser report: inspect earlier build steps.'); process.exit(0); }
+          const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+          const failures = [];
+          function visit(suite) {
+            for (const spec of suite.specs || []) for (const test of spec.tests || []) {
+              if (test.status === 'expected' || test.status === 'skipped') continue;
+              const result = (test.results || []).find(r => r.status !== 'passed' && r.status !== 'skipped');
+              const message = result?.error?.message || result?.errors?.[0]?.message || test.status;
+              failures.push({ title: `${test.projectName}: ${spec.title}`, message: String(message).replace(/\x1b\[[0-9;]*m/g, '').slice(0, 1800) });
+            }
+            for (const child of suite.suites || []) visit(child);
+          }
+          for (const suite of report.suites || []) visit(suite);
+          const stats = report.stats || {};
+          const body = [
+            '### Browser verification diagnostics',
+            `Commit: ${event.pull_request.head.sha}. Run: ${process.env.GITHUB_RUN_ID}.`,
+            `Expected: ${stats.expected ?? '?'}; unexpected: ${stats.unexpected ?? '?'}; flaky: ${stats.flaky ?? 0}; skipped: ${stats.skipped ?? 0}.`,
+            'This reports the automated synthetic test suite, not retailer price validation.',
+            ...failures.slice(0, 6).map(f => `\n**${f.title.replace(/[<>]/g, '')}**\n\n\`\`\`text\n${f.message.replace(/```/g, "'''")}\n\`\`\``),
+          ].join('\n\n');
+          fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues/${event.pull_request.number}/comments`, {
+            method: 'POST', headers: { Authorization: `Bearer ${process.env.GH_REPORT_TOKEN}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28' }, body: JSON.stringify({ body }),
+          }).then(async res => { if (!res.ok) throw new Error(`Comment request failed: ${res.status}`); console.log('Test summary posted.'); }).catch(error => { console.error(error.message); process.exitCode = 1; });
+          NODE
