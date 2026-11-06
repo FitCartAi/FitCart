@@ -1,0 +1,37 @@
+.local-prices { max-width: 1180px; }
+.local-prices h1 { font-size: clamp(2rem, 4vw, 3.1rem); }
+.local-prices h2 { margin: 0 0 16px; color: #0b513a; }
+.local-prices h3 { margin: 0 0 10px; }
+.local-prices a { text-decoration: underline; text-underline-offset: 3px; }
+.local-prices .button { text-decoration: none; }
+.lp-banner { background: #fff4d4; border: 1px solid #d5b65c; padding: 20px; border-radius: 12px; line-height: 1.65; }
+.lp-section { margin-top: 28px; }
+.lp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.local-prices label:not(.lp-check) { display: block; font-size: 14px; font-weight: 650; min-width: 0; }
+.local-prices input:not([type=checkbox]), .local-prices select { display: block; width: 100%; min-width: 0; border: 1px solid #9eafa4; border-radius: 8px; background: white; color: #153b2e; padding: 11px; font: inherit; margin-top: 7px; }
+.local-prices input[type=checkbox] { width: 19px; height: 19px; flex: 0 0 auto; accent-color: #0b513a; }
+.lp-check { display: flex; align-items: flex-start; gap: 10px; font-weight: 650; font-size: 15px; margin: 14px 0; }
+.lp-store-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.lp-store { min-width: 0; border: 1px solid #d8e2d9; background: #f5f7f2; border-radius: 12px; padding: 20px; }
+.lp-store p, .lp-line p { margin: 8px 0; overflow-wrap: anywhere; }
+.lp-store a, .lp-line a { overflow-wrap: anywhere; }
+.lp-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lp-item { padding: 12px 16px; border: 1px solid #d8e2d9; border-radius: 10px; min-width: 0; }
+.lp-item .lp-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.lp-gap { margin-top: 18px; }
+.lp-price { font-weight: 750; font-size: 30px; color: #0b513a; }
+.lp-result { padding: 20px; border: 1px solid #9ebca5; background: #e8f2e6; border-radius: 12px; line-height: 1.55; }
+.lp-error { color: #8b241b; background: #fff0eb; border-left: 4px solid #a63121; padding: 16px; }
+.lp-line { padding: 12px 0; border-bottom: 1px solid #d8e2d9; }
+.local-prices summary { cursor: pointer; font-weight: 650; padding: 10px 0; }
+.local-prices .help { font-size: 13px; line-height: 1.6; }
+.local-prices button:disabled { opacity: .55; cursor: not-allowed; }
+.local-prices :focus-visible { outline: 3px solid #0b513a; outline-offset: 3px; }
+.lp-file { max-width: 330px; }
+@media (max-width: 700px) {
+  .lp-grid, .lp-store-grid, .lp-items { grid-template-columns: minmax(0, 1fr); }
+  .lp-item .lp-grid { grid-template-columns: 1fr 1fr; }
+  .local-prices .panel { padding: 20px 14px; }
+  .local-prices .page-heading { flex-direction: column; }
+  .local-prices .hero-actions { align-items: stretch; }
+}

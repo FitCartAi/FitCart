@@ -1,38 +1,40 @@
 # FitCart
 
-**Your goals. Your budget. Your grocery list.**
+**Plan your week. Compare your cart. Spend less.**
 
-FitCart is a classroom venture exploring personalized grocery planning. This branch implements onboarding plus a clearly labeled fixed sample week, not personalized nutrition advice.
+Budget-first grocery-planning classroom prototype. V2A is a review branch using **invented prices**; it is not a live retailer comparison or personalized nutrition service.
 
-## Start in your browser
+## Try it without installing anything
 
-Read [START_HERE.md](START_HERE.md). The **feature/onboarding-preview** branch includes a Codespaces configuration to install dependencies and start a preview on port 3000. No local PowerShell, API key, database or hosting account is needed. GitHub usage limits apply.
+Read [START_HERE.md](START_HERE.md). Open Pull Request #2 and use Vercel's Preview link after the deployment is ready. A preview is separate from the current production site. Review before merging.
 
-## Current implementation
+## Current routes
 
 | Route | Purpose |
 | --- | --- |
-| / | Landing page and prototype status |
-| /onboarding | Four questionnaire sections and review |
-| /plan | Completed profile summary, editing and reset |
-| /demo | Fixed sample week, preset lunch swaps and grocery checklist |
+| `/` | Budget-first landing page |
+| `/budget` | Budget, stores, food/pantry, kitchen, optional goals and review |
+| `/cart` | Synthetic comparison using a completed V2 setup |
+| `/sample` | Synthetic sample profile and comparison |
+| `/feedback` | Copy-and-send prototype feedback; no survey backend |
+| `/onboarding`, `/plan`, `/demo` | Retained V1 screens for compatibility |
 
-Validation, imperial/metric conversion, optional per-tab storage and sample grocery arithmetic are implemented. Form answers stay in page memory unless users opt into browser session storage. They are not sent to a server. Use sample answers on shared computers.
+The calculator uses selected stores, plan size, budget, savings mode and measured pantry amounts. Appliance preferences filter sample inspiration; the full basket does not yet follow diet/allergy/appliance restrictions. No body measurements are required. Every store price and saving is fictional, with no verified price date. No retailer, AI or database integration is connected.
 
-**Not implemented:** personalized AI generation, nutrition targets, live store prices, allergy-safe meal selection, accounts, automatic budget optimization or survey collection. All sample prices are fictional; the sample does not use the questionnaire.
+Profiles stay in memory unless tab storage is explicitly enabled. Turning nutrition off clears optional body details. Use sample inputs on shared computers and clear answers before leaving.
 
-## Verification
+## Development and verification
 
-27 unit tests passed during implementation; the two domain modules passed strict TypeScript checks. Full application lint, typecheck, production build and desktop/mobile browser checks are configured in .github/workflows/verify.yml but require a successful GitHub run. Check the pull request before merging. A real Codespaces startup has not yet been verified.
+The existing stack and dependency versions are unchanged. In a development environment, `npm run check` runs unit tests, lint, types and the production build. `npm run test:e2e` runs browser scenarios against the build. GitHub Actions runs these checks for the PR. See the latest commit's results rather than treating written tests as passed tests.
 
-For developers in the cloud workspace: npm test; npm run check; then npx playwright install chromium and npm run test:e2e. Browser tests use the production build. Node 22 is configured. Review and commit the generated package-lock.json after the first successful installation, then switch CI to npm ci. No lockfile is claimed to exist yet.
+No package lockfile is added in this change: the local runtime could not reach npm. Review and commit a generated lockfile from a successful installation in a separate maintenance change. Do not synthesize one.
 
 ## Documentation
 
-- [Product context](docs/PRODUCT_CONTEXT.md)
-- [Architecture](docs/ARCHITECTURE.md)
+- [V2A scope, calculations and limitations](docs/V2A_BUDGET_FIRST.md)
 - [Decision log](docs/DECISIONS.md)
-- [Implementation decisions and file map](docs/ONBOARDING_IMPLEMENTATION.md)
-- [MVP roadmap](docs/MVP_ROADMAP.md)
+- [Roadmap](docs/MVP_ROADMAP.md)
+- [Original product context](docs/PRODUCT_CONTEXT.md)
+- [Architecture](docs/ARCHITECTURE.md)
 
-Use feature branches and pull requests. Never commit secrets, .env.local, user measurements, survey responses, private team documents or generated browser reports. Keep implemented, mocked and planned features distinct.
+Use feature branches and PRs. Never commit credentials, real user profiles, raw survey responses, private charter materials, or generated browser reports.
